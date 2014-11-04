@@ -1,0 +1,95 @@
+
+git commit -a -m "commit all modified files"
+
+# push local repository to github
+git push origin master
+
+# new repository
+# create it on github
+mkdir ~/Hello-World
+cd ~/Hello-World
+git init
+git remote add origin https://github.com/username/Hello-World.git
+git push origin master
+
+# new repositor from local directory
+git init
+
+# checkout existing repository
+git clone https://github.com/username/Hello-World.git mynewdir
+
+git status
+
+# compare working directory with staging
+git diff <file>
+
+# compare staging with repo
+git diff --cached
+
+# log with diffs
+diff log -p
+
+# gui log and history
+gitk
+
+# undo file modifications
+git checkout -- <file>
+
+# tag creation from HEAD
+git tag -a v1.4 -m 'my version 1.4'
+
+# fetch and checkout tags
+git fetch -t
+git tag
+git checkout tags/<tag>
+
+# branching
+master$ git branch iss53
+new$ git co iss53
+... commit etc.
+new$ git push origin
+master$ git fetch iss53
+master$ git merge iss53
+# commit?
+master$ git branch -d iss53
+master$ git push origin
+
+# for eclipse if may be best to have .project and .classpath as
+# example files; not checked into the project
+
+####################################################
+# updating a local repository with remote changes
+
+When you use pull, Git tries to automatically do your work for you. It
+is context sensitive, so Git will merge any pulled commits into the
+branch you are currently working in. pull automatically merges the
+commits without letting you review them first. If you don't closely
+manage your branches you may run into frequent conflicts.
+
+When you fetch, Git gathers any commits from the target branch that do
+not exist in your current branch and stores them in your local
+repository. However, it does not merge them with your current
+branch. This is particularly useful if you need to keep your
+repository up to date, but are working on something that might break
+if you update your files. To integrate the commits into your master
+branch, you use merge.
+
+http://stackoverflow.com/questions/292357/whats-the-difference-between-git-pull-and-git-fetch
+
+# get data from remote server but don't update repo?
+git fetch
+# fetch and merge changes in with local copy
+git pull
+
+####################################################
+
+
+# TODO move eclipse stuff somewhere else
+# build release from tag
+$ git clone http://github.com/sizezero/dice-probabilities.git DP-release -b v1.0
+$ android update project -p DP-release
+$ android update test-project -p DP-release/tests -m ..
+$ cd DP-release
+$ ant release
+$ cd tests
+$ ant test

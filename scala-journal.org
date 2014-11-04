@@ -1,0 +1,106 @@
+
+* 2014-11-01
+
+I probably should have been doing this a while ago.  Now is better
+than nothing.
+
+While reading functional programming with scala I was working with a
+lot of functions that were returning functions. It turns out that that
+syntax produces an identical signature as the curry syntax. e.g.
+
+#+BEGIN_SRC scala
+object curry {
+  
+  def f1(a: Int): Int => Int =
+  	b => a + b                                //> f1: (a: Int)Int => Int
+  	
+  def f2(a: Int)(b: Int): Int =
+  	a + b                                     //> f2: (a: Int)(b: Int)Int
+
+	// note: both functions can be assigned to x and y which means they have the same type
+  var x = f1(42)                                  //> x  : Int => Int = <function1>
+  x(3)                                            //> res0: Int = 45
+  x = f2(42)
+  x(3)                                            //> res1: Int = 45
+  
+  var y = f2 _                                    //> y  : Int => (Int => Int) = <function1>
+  y(42)(3)                                        //> res2: Int = 45
+  y = f1 _
+  y(42)(3)                                        //> res3: Int = 45
+  
+}
+#+END_SRC
+
+Try to learn the basics of sbt, activator, eclipse.  Some minimal ways
+to get started:
+
+Had to add sbteclipse to plugins dir
+
+#+BEGIN_SRC bash
+cd ~/.sbt
+mkdir plugins
+echo 'addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "2.1.2")' >> ~/.sbt/plugins/plugins.sbt
+#+END_SRC
+
+The above command did not seem to allow eclipse to be run from
+activator.  I was only able to create the eclipse project files with
+"activator ui"
+
+#+BEGIN_SRC bash
+activator new myproject minimal-scala
+cd myproject
+rm activator*
+git init
+git status
+<add .cache .classpath .project to .gitignore>
+git add <files listed in status>
+git commit -a -m "initial changes to template"
+<add project via github website>
+git remote add origin https://github.com/sizezero/PROJECTNAME.git
+git push origin master
+activator compile
+activator eclipse
+#+END_SRC
+
+* 2014-11-02
+
+Not sure if all the files should be added to the project.  Adding the
+activator jar seems strange.  Stackoverflow says their only purpose is
+for allowing builds for people that don't have activator installed.
+Seems kind of dumb.  My policy will be to delete them.
+
+http://stackoverflow.com/questions/26131829/what-are-activator-and-activator-launch-1-2-10-jar-files-in-a-new-project-with-p
+
+Maybe I should keep that new project snippet in a separate place.  If
+I use it a lot, it may make sense to make my own template or bash
+script.
+
+TODO: learn more about scala-ide, formatting, etc.
+
+Selecting a source file or package from the package explorer allows
+the "source" menu to appear which allows the "format" command.  This
+is a good way to clean up poorly formatted scala.  Seems to also get
+rid of hard tabs.
+
+TODO: check for tabs in source code
+
+It seems scala formatting inherits from java.  Need to make a custom
+java formatter that doesn't use tabs.
+
+https://www.assembla.com/spaces/scala-ide/tickets/1000198#/activity/ticket:
+
+TODO: see if Scalastyle is used by the ide
+
+TODO: the parsing shown in scells is more interesting than I had
+thought.  Read the chapter on combinator parsing.
+
+TODO: configure eclipse to trim trailing spaces
+
+2014-11-03
+
+For some reason I can run the eclipsify command from the command line
+now:
+
+$ activator eclipse
+
+...I swear this wasn't working yesterday
