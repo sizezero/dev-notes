@@ -96,11 +96,13 @@ thought.  Read the chapter on combinator parsing.
 
 TODO: configure eclipse to trim trailing spaces
 
-2014-11-03
+* 2014-11-03
 
 For some reason I can run the eclipsify command from the command line
 now:
 
+#+BEGIN_SRC bash
 $ activator eclipse
+#+END_SRC
 
 ...I swear this wasn't working yesterday
