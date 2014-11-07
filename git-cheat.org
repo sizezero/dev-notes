@@ -1,51 +1,83 @@
 
 #+BEGIN_SRC bash
-
 git commit -a -m "commit all modified files"
+#+END_SRC
 
-# push local repository to github
+push local repository to github
+#+BEGIN_SRC bash
 git push origin master
+#+END_SRC
 
-# new repository
-# create it on github
+new repository
+
+create it on github
+#+BEGIN_SRC bash
 mkdir ~/Hello-World
 cd ~/Hello-World
 git init
 git remote add origin https://github.com/username/Hello-World.git
 git push origin master
+#+END_SRC
 
-# new repositor from local directory
+new repository from local directory
+#+BEGIN_SRC bash
 git init
+#+END_SRC
 
-# checkout existing repository
+checkout existing repository
+#+BEGIN_SRC bash
 git clone https://github.com/username/Hello-World.git mynewdir
-
 git status
+#+END_SRC
 
-# compare working directory with staging
+compare working directory with staging
+#+BEGIN_SRC bash
 git diff <file>
+#+END_SRC
 
-# compare staging with repo
+compare staging with repo
+#+BEGIN_SRC bash
 git diff --cached
+#+END_SRC
 
-# log with diffs
+log with diffs
+#+BEGIN_SRC bash
 diff log -p
+#+END_SRC
 
-# gui log and history
+gui log and history
+#+BEGIN_SRC bash
 gitk
+#+END_SRC
 
-# undo file modifications
+undo file modifications
+#+BEGIN_SRC bash
 git checkout -- <file>
+#+END_SRC
 
-# tag creation from HEAD
+tag creation from HEAD
+#+BEGIN_SRC bash
 git tag -a v1.4 -m 'my version 1.4'
+#+END_SRC
 
-# fetch and checkout tags
+fetch and checkout tags
+#+BEGIN_SRC bash
 git fetch -t
 git tag
 git checkout tags/<tag>
+#+END_SRC
 
-# branching
+branching and merging within the same working copy
+#+BEGIN_SRC bash
+git checkout -b <new branch>
+<commits>
+git checkout master
+git merge <new branch>
+git branch -d <new branch>
+#+END_SRC
+
+branching across two working copies
+#+BEGIN_SRC bash
 master$ git branch iss53
 new$ git co iss53
 ... commit etc.
@@ -55,39 +87,60 @@ master$ git merge iss53
 # commit?
 master$ git branch -d iss53
 master$ git push origin
+#+END_SRC
 
-# for eclipse if may be best to have .project and .classpath as
-# example files; not checked into the project
+"git merge -d <branch> will not delete a branch that hasn't been
+merged and will prompt the user to use -D instead.  "git merge -d" is
+safe.
+
+push out new branch to remote
+#+BEGIN_SRC bash
+git push origin <branch>
+#+END_SRC
+
+delete a remote branch (cryptic syntax)
+#+BEGIN_SRC bash
+git push origin :<branch>
+#+END_SRC
+
+pending status of merges
+#+BEGIN_SRC bash
+git branch -v
+git branch --merged
+git branch --no-merged
+#+END_SRC
+
+
+for eclipse if may be best to have .project and .classpath as
+example files; not checked into the project
 
 ####################################################
-# updating a local repository with remote changes
 
-# When you use pull, Git tries to automatically do your work for you. It
-# is context sensitive, so Git will merge any pulled commits into the
-# branch you are currently working in. pull automatically merges the
-# commits without letting you review them first. If you don't closely
-# manage your branches you may run into frequent conflicts.
+updating a local repository with remote changes
 
-# When you fetch, Git gathers any commits from the target branch that do
-# not exist in your current branch and stores them in your local
-# repository. However, it does not merge them with your current
-# branch. This is particularly useful if you need to keep your
-# repository up to date, but are working on something that might break
-# if you update your files. To integrate the commits into your master
-# branch, you use merge.
+When you use pull, Git tries to automatically do your work for you. It
+is context sensitive, so Git will merge any pulled commits into the
+branch you are currently working in. pull automatically merges the
+commits without letting you review them first. If you don't closely
+manage your branches you may run into frequent conflicts.
+
+When you fetch, Git gathers any commits from the target branch that do
+not exist in your current branch and stores them in your local
+repository. However, it does not merge them with your current
+branch. This is particularly useful if you need to keep your
+repository up to date, but are working on something that might break
+if you update your files. To integrate the commits into your master
+branch, you use merge.
 
 http://stackoverflow.com/questions/292357/whats-the-difference-between-git-pull-and-git-fetch
 
-# get data from remote server but don't update repo?
-git fetch
-# fetch and merge changes in with local copy
-git pull
-
 ####################################################
 
 
-# TODO move eclipse stuff somewhere else
-# build release from tag
+TODO: move eclipse stuff somewhere else
+
+build release from tag
+#+BEGIN_SRC bash
 git clone http://github.com/sizezero/dice-probabilities.git DP-release -b v1.0
 android update project -p DP-release
 android update test-project -p DP-release/tests -m ..
@@ -95,5 +148,62 @@ cd DP-release
 ant release
 cd tests
 ant test
+#+END_SRC
 
+list all remotes (origin is the primary remote)
+#+BEGIN_SRC bash
+git remote
+#+END_SRC
+
+get data from remote server and merge in two steps (recommended)
+#+BEGIN_SRC bash
+git fetch
+git merge origin/master
+#+END_SRC
+
+fetch and merge changes in with local copy
+#+BEGIN_SRC bash
+git pull
+#+END_SRC
+
+*HEAD*: the current commit your repo is on. Most of the time HEAD
+points to the latest commit in your branch, but that doesn't have to
+be the case. HEAD really just means "what is my repo currently
+pointing at". Thanks svick for the heads up on this one (no pun
+intended)
+
+In the event that the commit HEAD refers to is not the tip of any
+branch, this is called a "detached head".
+
+*head*: Pointing to named references a branch recently
+submitted. Unless you use the package reference , heads typically
+stored in .git/refs/heads/.
+
+*master*: The name of the default branch that git creates for you when
+first creating a repo. In most cases, "master" means "the main
+branch". Most shops have everyone pushing to master, and master is
+considered the definitive view of the repo. But it's also common for
+release branches to be made off of master for releasing. Your local
+repo has its own master branch, that almost always follows the master
+of a remote repo.
+
+*origin*: The default name that git gives to your main remote
+repo. Your box has its own repo, and you most likely push out to some
+remote repo that you and all your coworkers push to. That remote repo
+is almost always called origin, but it doesn't have to be.
+
+HEAD is an official notion in git, HEAD always has a well defined
+meaning. master and origin are common names usually used in git but
+they don't have to be.
+
+see what is currently checked out (where the head is)
+#+BEGIN_SRC bash
+$ cat .git/HEAD 
+ref: refs/heads/master
+$ cat .git/refs/heads/master 
+3fbffc395b1a46574d1eafda5201664953ed117a
+$ git reflog HEAD
+3fbffc3 HEAD@{0}: commit: removed old cheat file
+84aeb21 HEAD@{1}: commit: turn git notes into org file
+43c89a9 HEAD@{2}: clone: from https://github.com/sizezero/dev-notes.git
 #+END_SRC
