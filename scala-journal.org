@@ -105,4 +105,16 @@ now:
 $ activator eclipse
 #+END_SRC
 
-...I swear this wasn't working yesterday
+...I swear this wasn't working yesterday.  I think with a fresh
+install of the activator, you may have to run the "make eclipse files"
+once with the ui before you are able to run it from the command line.
+
+* 2014-11-04
+
+Trying to do a couple things:
+
+- use case classes with matching instead of heavyweight OOP classes
+- favor functional style and immutablilty
+
+This is probably not the best choice in all cases but it gives me a
+little more experience with these other programming paradigms
