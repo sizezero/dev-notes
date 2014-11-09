@@ -1,4 +1,119 @@
 
+* 2014-11-08
+
+Ran into a case where I was writing a pure function that reformats a
+string for pretty printing.  The natural solution that came to me was
+imperative but I thought I would implement it a functional way just to
+compare them. I like the imperative solution better.
+
+#+BEGIN_SRC scala
+  /**
+   * Add some newlines and indentation to make the objects easier to read
+   */
+  def prettyPrint: String = {
+    // it would be interesting to see this functionally instead of imperatively
+    // I would imagine lots of objects would be generated in order to handle indents
+    var indent = 0
+    val sb = new StringBuilder() 
+    for (c <- toString) {
+      c match {
+        case '(' => {
+          sb.append("(\n")
+          indent += 2
+          sb.append(" " * indent)
+        }
+        case ')' => {
+          sb.append(")\n")
+          indent -= 2
+          sb.append(" " * indent)
+        }
+        case ',' => {
+          sb.append(",\n")
+          sb.append(" " * indent)
+        }
+        case _ => sb.append(c)
+      }
+    }
+    sb.toString
+  }
+#+END_SRC
+
+#+BEGIN_SRC scala
+  // this is shorter but way more obscure than the imperative approach
+  def prettyPrintFunctional: String = {
+    toString.foldLeft((0, "")){ (t, c) =>
+      t match {
+        case (i, s) => c match {
+          case '(' => (i+2, s + "(\n" + " " * (i+2))
+          case ')' => (i-2, s + ")\n" + " " * (i-2))
+          case ',' => (i, s + ")\n" + " " * i)
+          case _ => (i, s + c)
+        }
+      }
+    }._2
+  }
+#+END_SRC
+
+I think functional solutions run into problems when you have to pass a
+large amount of state between iterations.
+
+* 2014-11-04
+
+Trying to do a couple things:
+
+- use case classes with matching instead of heavyweight OOP classes
+- favor functional style and immutablilty
+
+This is probably not the best choice in all cases but it gives me a
+little more experience with these other programming paradigms
+
+* 2014-11-03
+
+For some reason I can run the eclipsify command from the command line
+now:
+
+#+BEGIN_SRC bash
+$ activator eclipse
+#+END_SRC
+
+...I swear this wasn't working yesterday.  I think with a fresh
+install of the activator, you may have to run the "make eclipse files"
+once with the ui before you are able to run it from the command line.
+
+* 2014-11-02
+
+Not sure if all the files should be added to the project.  Adding the
+activator jar seems strange.  Stackoverflow says their only purpose is
+for allowing builds for people that don't have activator installed.
+Seems kind of dumb.  My policy will be to delete them.
+
+http://stackoverflow.com/questions/26131829/what-are-activator-and-activator-launch-1-2-10-jar-files-in-a-new-project-with-p
+
+Maybe I should keep that new project snippet in a separate place.  If
+I use it a lot, it may make sense to make my own template or bash
+script.
+
+TODO: learn more about scala-ide, formatting, etc.
+
+Selecting a source file or package from the package explorer allows
+the "source" menu to appear which allows the "format" command.  This
+is a good way to clean up poorly formatted scala.  Seems to also get
+rid of hard tabs.
+
+TODO: check for tabs in source code
+
+It seems scala formatting inherits from java.  Need to make a custom
+java formatter that doesn't use tabs.
+
+https://www.assembla.com/spaces/scala-ide/tickets/1000198#/activity/ticket:
+
+TODO: see if Scalastyle is used by the ide
+
+TODO: the parsing shown in scells is more interesting than I had
+thought.  Read the chapter on combinator parsing.
+
+TODO: configure eclipse to trim trailing spaces
+
 * 2014-11-01
 
 I probably should have been doing this a while ago.  Now is better
@@ -62,59 +177,3 @@ activator compile
 activator eclipse
 #+END_SRC
 
-* 2014-11-02
-
-Not sure if all the files should be added to the project.  Adding the
-activator jar seems strange.  Stackoverflow says their only purpose is
-for allowing builds for people that don't have activator installed.
-Seems kind of dumb.  My policy will be to delete them.
-
-http://stackoverflow.com/questions/26131829/what-are-activator-and-activator-launch-1-2-10-jar-files-in-a-new-project-with-p
-
-Maybe I should keep that new project snippet in a separate place.  If
-I use it a lot, it may make sense to make my own template or bash
-script.
-
-TODO: learn more about scala-ide, formatting, etc.
-
-Selecting a source file or package from the package explorer allows
-the "source" menu to appear which allows the "format" command.  This
-is a good way to clean up poorly formatted scala.  Seems to also get
-rid of hard tabs.
-
-TODO: check for tabs in source code
-
-It seems scala formatting inherits from java.  Need to make a custom
-java formatter that doesn't use tabs.
-
-https://www.assembla.com/spaces/scala-ide/tickets/1000198#/activity/ticket:
-
-TODO: see if Scalastyle is used by the ide
-
-TODO: the parsing shown in scells is more interesting than I had
-thought.  Read the chapter on combinator parsing.
-
-TODO: configure eclipse to trim trailing spaces
-
-* 2014-11-03
-
-For some reason I can run the eclipsify command from the command line
-now:
-
-#+BEGIN_SRC bash
-$ activator eclipse
-#+END_SRC
-
-...I swear this wasn't working yesterday.  I think with a fresh
-install of the activator, you may have to run the "make eclipse files"
-once with the ui before you are able to run it from the command line.
-
-* 2014-11-04
-
-Trying to do a couple things:
-
-- use case classes with matching instead of heavyweight OOP classes
-- favor functional style and immutablilty
-
-This is probably not the best choice in all cases but it gives me a
-little more experience with these other programming paradigms
