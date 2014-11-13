@@ -207,3 +207,27 @@ $ git reflog HEAD
 84aeb21 HEAD@{1}: commit: turn git notes into org file
 43c89a9 HEAD@{2}: clone: from https://github.com/sizezero/dev-notes.git
 #+END_SRC
+
+view previous diffs
+#+BEGIN_SRC bash
+$ git log --oneline Rabbit.scala
+b58573a rabbits were not reacting to attack messages
+086aa67 rabbits breed in a similar manner as wolves
+...
+$ git diff 086a..b585 Rabbit.scala
+diff --git a/src/main/scala/org/kleemann/predprey/model/things/Rabbit.scala b/src/main/scala/org/kleemann
+/predprey/model/things/Rabbit.scala
+index 607a968..5000200 100644
+--- a/src/main/scala/org/kleemann/predprey/model/things/Rabbit.scala
++++ b/src/main/scala/org/kleemann/predprey/model/things/Rabbit.scala
+@@ -34,7 +34,8 @@ case class Rabbit(
+ 
+   // Rabbit has dynamic behavior but check for starvation first
+   def act(ms: List[Message], s: SimulationBuilder): Rabbit = {
+-    if (isStarved) {
++    val isAttacked = ms.exists{ _ == Attack }
++    if (isStarved || isAttacked) {
+       s.kill(this)
+       s.birth(new Meat(loc))
+       this
+#+END_SRC
