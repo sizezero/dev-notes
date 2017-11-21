@@ -1,4 +1,63 @@
 
+* 2017-11
+
+- liked skipping chapters rule
+- I still think immutable values and pure functions are the best lessons from FP
+
+silly composable function argument
+
+z=f(g(x))
+is better than 
+y=g(x)
+z=f(y)
+
+liked demystifying of FP lingo
+- lambda calculous == a formal way of thinking about anonymous functions
+- functor == an object that implementa a function that maps all
+  contained elements to something else (map). Map is a set theory term
+  not to be confused by the map data structure.
+- monad = an object that implements map and flatmap. (in theory also
+  point/lift/apply but in scala the only thing that seems to matter is
+  the common use of a for expression so map and flatmap are the only
+  things that matter.
+- higher order function == function that takes functions as arguments (or returns functions)
+- for expressions only work on a single type of monad
+- If an FP advocate says "The IO monad makes a function that handles
+  IO pure" they are lying.
+- I look at IO as simple a tag to remind me that some module of code has side-effects
+- forgot about the case class copy method. Did that exist when we learned scala?
+- reminded me of crazy scala syntax "Odersky never meet a punctuation
+  character he didn't like"  This may explain the rise of Kotlin.
+  - foldleft / foldright
+  - pass by value
+  - trait requies
+- scala is so powerful you can write your own control groups (whilst)
+- doesn't sell me on partially applied functions and currying
+- recursion and map/flatmap ad-nauseum may be good for some readers
+- state can be as simple as "take an immutable argument and return an
+  immutable value of the same type"
+- the mathamatical gymnastics to create a state monad and allow
+  multiple monad types to work in a for expression...what is the
+  justification for this?. Monad Transformer?
+- did it help for scala to call them "for expressions"? Does this just
+  confuse imperative programmers in thinking they are looping?
+- functional error handling: Option, Try, Or, Either. These are
+  genious.
+- bind example (54%) didn't make sense to me. Why spend all this effor
+  to combine functions?
+- bugged me that Random class was used in a functional example.
+- "For something to be used in a for expression, it doesn't have to be
+  a class that implements map and flatmap methods; it just need to
+  return a type that implements map and flatMap methods"
+- it bugs me that Scala has all of these other fundemental libraries:
+  Cats, Scalaz. Will one of these ever be blessed and incorporated
+  into the standard library?
+- domain modeling oop vs FP was interesting. It shows the power of FP
+  but also how horribly verbose it is. Didn't mention how OOP methods
+  on immutable functions benefit from the builder syntax. Maybe this
+  is just multiple copies.
+
+
 * 2014-11-26
 
 Minor success.  Added a junit test to the android-sbt-plugin
