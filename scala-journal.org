@@ -15,7 +15,8 @@ kool-aide.
 
 Each chapter is short and focused and fenced by a Goal and Review
 section. He starts the book saying "if you already know a concept skip
-the chapter".
+the chapter". This was good advice and the focused nature of the
+chapters made it easy to know if the topic was skip-able.
 
 There is a lot of talk about the benefits of immutable values and pure
 functions especially as they apply to concurrency, clarity and
@@ -26,14 +27,14 @@ but it was preaching to the choir.
 
 The de-mystification of the FP lingo was very refreshing
 
-| *FP*     | *English*                                                                                  |
-|----------+--------------------------------------------------------------------------------------------|
-| Lambda   | Anoymous Function                                                                          |
-| map      | creates a destination object with transformed elements of the source object                |
-| flat map | Like map but each source element can be transformed into zero or more destination elements |
-| Functor  | an object than implements map                                                              |
-| Monad    | An object that implements map and flat map *1                                              |
-| Future   | Concurrent Process *2                                                                      |
+| *FP*    | *English*                                                                                  |
+|---------+--------------------------------------------------------------------------------------------|
+| Lambda  | Anoymous Function                                                                          |
+| map     | creates a destination object with transformed elements of the source object                |
+| flatMap | like map but each source element can be transformed into zero or more destination elements |
+| Functor | an object than implements map                                                              |
+| Monad   | An object that implements map and flatMap *1                                               |
+| Future  | Concurrent Process *2                                                                      |
 
 - *1 :: In theory a Monad must also have a point/lift/apply ability
         but that doesn't really matter in Scala. There are also
@@ -44,10 +45,10 @@ The de-mystification of the FP lingo was very refreshing
         needs to be learned.
 
 Really the only thing that matters to Scala is that if an object
-implements map() and flatMap then() it can be used in a for
+implements map and flatMap then() it can be used in a for
 expression. That's it! Also, "For something to be used in a for
 expression, it doesn't have to be a class that implements map and
-flatmap methods; it just need to return a type that implements map and
+flatMap methods; it just need to return a type that implements map and
 flatMap methods"
 
 For that matter, did it help for Scala to call them "for expressions"?
@@ -130,7 +131,7 @@ z=f(y)
 ...this doesn't make any sense to me. Always use temp values when they
 improve readability and remove them when they obscure readability.
 
-There are a whole class of mathematical gymnastict that FP folks like
+There are a whole class of mathematical gymnastics that FP folks like
 to engage in just to allow a for expression to work with multiple
 types of mondads. This is summed up in the whole section on Monad
 Transformers. For the life of me I could not see how this was
@@ -142,7 +143,7 @@ the same type" Why make it more complicated than that?
 
 I haven't looked at Scala in a while and was reminded how punctuation
 heavy it is. I don't think Odersky ever met a punctuation character he
-didn't like: foldLeft / FoldRight, pass by value, trait requires. Can
+didn't like: foldLeft, FoldRight, pass by value, trait requires. Can
 you remember the punctuation that performs these concepts? This
 unreadability may explain the rise of Kotlin in spite of Scala being
 such a richer language.
@@ -151,12 +152,13 @@ None of the authors arguments on partially applied functions and
 currying sold me on their value.
 
 He only had a couple chapters on Akka and actors so maybe I shouldn't
-ding him on this. I still haven't seen a good actor example that makes
-me say "this is a great way to solve this problem". How do actors mix
-with microservices if at all? Can actors be mixed between systems or
-does the actor "system" have to be a monolithic application?
+ding him on this but I still haven't seen a good actor example that
+makes me say "this is a great way to solve this problem". How do
+actors mix with microservices if at all? Can actors be mixed between
+services or does the actor "system" have to be a monolithic
+application?
 
-Parallel collection are easy but don't seem to have an immediate
+Parallel collections are easy but don't seem to have an immediate
 use. I would always choose to handle concurrency at a higher level.
 
 * 2014-11-26
