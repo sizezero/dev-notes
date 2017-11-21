@@ -1,62 +1,163 @@
 
 * 2017-11
 
-- liked skipping chapters rule
-- I still think immutable values and pure functions are the best lessons from FP
+My friend Tony sent me a free ebook "Functional, Programming
+Simplified: (Scala Edition)." It had enough good points that it's
+worth a little note taking.
 
-silly composable function argument
+** The Good
 
+The author of the book grew up with clasical imperative / OOP
+methodologies and has since been using Scala to learn and implement
+projects with functional methodologies. His background gives him a
+good voice to folks who haven't already drunk the functional
+kool-aide.
+
+Each chapter is short and focused and fenced by a Goal and Review
+section. He starts the book saying "if you already know a concept skip
+the chapter".
+
+There is a lot of talk about the benefits of immutable values and pure
+functions especially as they apply to concurrency, clarity and
+technical debt. I became a fan of this decades ago and had no idea I
+was adopting some aspect of functional programming. The book goes into
+a lot of specifics on the benefits of immutability and pure functions
+but it was preaching to the choir.
+
+The de-mystification of the FP lingo was very refreshing
+
+| *FP*     | *English*                                                                                  |
+|----------+--------------------------------------------------------------------------------------------|
+| Lambda   | Anoymous Function                                                                          |
+| map      | creates a destination object with transformed elements of the source object                |
+| flat map | Like map but each source element can be transformed into zero or more destination elements |
+| Functor  | an object than implements map                                                              |
+| Monad    | An object that implements map and flat map *1                                              |
+| Future   | Concurrent Process *2                                                                      |
+
+- *1 :: In theory a Monad must also have a point/lift/apply ability
+        but that doesn't really matter in Scala. There are also
+        Applicatives but these don't matter to Scala either.
+
+- *2 :: I think of Futures as "processes who's result may or may not
+        have completed" but I agree that the name is terminology that
+        needs to be learned.
+
+Really the only thing that matters to Scala is that if an object
+implements map() and flatMap then() it can be used in a for
+expression. That's it! Also, "For something to be used in a for
+expression, it doesn't have to be a class that implements map and
+flatmap methods; it just need to return a type that implements map and
+flatMap methods"
+
+For that matter, did it help for Scala to call them "for expressions"?
+Does this just confuse imperative programmers in thinking they are
+looping when they are just calling generators and map functions?
+
+There was a lot of honesty that you don't hear from the FP camp. One
+example: "If an FP advocate says 'The IO monad makes a function that
+handles IO pure' they are lying." I really like the concept of an IO
+tag as a way to document impure functions. It's a shame that it
+doesn't work as the author exhaustively shows. Basically, having two
+levels of Monad such as Try[IO[String]] makes them difficult to unwrap
+in a for expression. Some frameworks work around this by making
+separate monads: FileIO, NetworkIO and DatabaseIO
+
+This brings me to the other standard monads. I love functional error
+handling with: Option, Try, Or, Either. These are genious.
+
+Domain modeling oop vs FP was interesting. It shows the power of FP
+for modeling very complex problems that have to be divided among
+multiple groups. I don't think he did a good job of selling the pure
+functional architecture. I think he believe this is the best
+architecture but it didn't do it for me. Maybe I don't work on any
+projects that are large enough to benefit from that kind of
+separation?
+
+The functional objects approach was an easy sell to me. I love the
+builder pattern:
+
+#+BEGIN_SRC scala
+Pizza p = Pizza().addTopping(Pepperoni()).addTopping(Mushroom())
+#+END_SRC
+
+The fact that the scala collection classes follow this pattern makes
+me think it's extra "blessed"
+
+Case class copy and Lenses look like a great way to copy/update
+immutable objects. I don't remember this from the Odersky classes.
+
+Futures are simple and awesome. They're a great way to replace any
+system that uses callbacks. They really leverage the scala "call by
+name" feature.
+
+** The Indifferent
+
+Scala is so powerful you can write your own control groups (whilst). I
+liked his example.
+
+It bugged me that Random class was used in a functional example was
+not immutable. He mutated it and passed the reference around as if it
+was immutable.
+
+It bugs me that Scala has all of these other fundemental libraries:
+Cats, Scalaz.  Will one of these ever be blessed and incorporated into
+the standard library?
+
+Property based testing (ScalaCheck) should interest me more than it
+does.  I haven't tried it but I have several guys on my team that have
+tried it and they are not that impressed.  The concensus is that it's
+not a bad way to find the optimal unit or functional test but it
+generally increases testing time a huge amount with dubious tests.
+I'd still like to try them.
+
+** The Bad
+
+There were early discussions that creating composable functionality is
+superior to temporary values. e.g.
+
+#+BEGIN_SRC scala
 z=f(g(x))
+#+END_SRC
+
 is better than 
+
+#+BEGIN_SRC scala
 y=g(x)
 z=f(y)
+#+END_SRC
 
-liked demystifying of FP lingo
-- lambda calculous == a formal way of thinking about anonymous functions
-- functor == an object that implementa a function that maps all
-  contained elements to something else (map). Map is a set theory term
-  not to be confused by the map data structure.
-- monad = an object that implements map and flatmap. (in theory also
-  point/lift/apply but in scala the only thing that seems to matter is
-  the common use of a for expression so map and flatmap are the only
-  things that matter.
-- higher order function == function that takes functions as arguments (or returns functions)
-- for expressions only work on a single type of monad
-- If an FP advocate says "The IO monad makes a function that handles
-  IO pure" they are lying.
-- I look at IO as simple a tag to remind me that some module of code has side-effects
-- forgot about the case class copy method. Did that exist when we learned scala?
-- reminded me of crazy scala syntax "Odersky never meet a punctuation
-  character he didn't like"  This may explain the rise of Kotlin.
-  - foldleft / foldright
-  - pass by value
-  - trait requies
-- scala is so powerful you can write your own control groups (whilst)
-- doesn't sell me on partially applied functions and currying
-- recursion and map/flatmap ad-nauseum may be good for some readers
-- state can be as simple as "take an immutable argument and return an
-  immutable value of the same type"
-- the mathamatical gymnastics to create a state monad and allow
-  multiple monad types to work in a for expression...what is the
-  justification for this?. Monad Transformer?
-- did it help for scala to call them "for expressions"? Does this just
-  confuse imperative programmers in thinking they are looping?
-- functional error handling: Option, Try, Or, Either. These are
-  genious.
-- bind example (54%) didn't make sense to me. Why spend all this effor
-  to combine functions?
-- bugged me that Random class was used in a functional example.
-- "For something to be used in a for expression, it doesn't have to be
-  a class that implements map and flatmap methods; it just need to
-  return a type that implements map and flatMap methods"
-- it bugs me that Scala has all of these other fundemental libraries:
-  Cats, Scalaz. Will one of these ever be blessed and incorporated
-  into the standard library?
-- domain modeling oop vs FP was interesting. It shows the power of FP
-  but also how horribly verbose it is. Didn't mention how OOP methods
-  on immutable functions benefit from the builder syntax. Maybe this
-  is just multiple copies.
+...this doesn't make any sense to me. Always use temp values when they
+improve readability and remove them when they obscure readability.
 
+There are a whole class of mathematical gymnastict that FP folks like
+to engage in just to allow a for expression to work with multiple
+types of mondads. This is summed up in the whole section on Monad
+Transformers. For the life of me I could not see how this was
+useful. Are nested for expressions so bad?
+
+There was also a lot of talke about functional state. State can be as
+simple as "take an immutable argument and return an immutable value of
+the same type" Why make it more complicated than that?
+
+I haven't looked at Scala in a while and was reminded how punctuation
+heavy it is. I don't think Odersky ever met a punctuation character he
+didn't like: foldLeft / FoldRight, pass by value, trait requires. Can
+you remember the punctuation that performs these concepts? This
+unreadability may explain the rise of Kotlin in spite of Scala being
+such a richer language.
+
+None of the authors arguments on partially applied functions and
+currying sold me on their value.
+
+He only had a couple chapters on Akka and actors so maybe I shouldn't
+ding him on this. I still haven't seen a good actor example that makes
+me say "this is a great way to solve this problem". How do actors mix
+with microservices if at all? Can actors be mixed between systems or
+does the actor "system" have to be a monolithic application?
+
+Parallel collection are easy but don't seem to have an immediate
+use. I would always choose to handle concurrency at a higher level.
 
 * 2014-11-26
 
