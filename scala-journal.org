@@ -1,6 +1,8 @@
 
 * 2017-11
 
+I haven't had a need for Scala in a couple years.
+
 My friend Tony sent me a free ebook "Functional, Programming
 Simplified: (Scala Edition)." It had enough good points that it's
 worth a little note taking.
@@ -23,7 +25,7 @@ functions especially as they apply to concurrency, clarity and
 technical debt. I became a fan of this decades ago and had no idea I
 was adopting some aspect of functional programming. The book goes into
 a lot of specifics on the benefits of immutability and pure functions
-but it was preaching to the choir.
+but, for me, it was preaching to the choir.
 
 The de-mystification of the FP lingo was very refreshing
 
@@ -45,7 +47,7 @@ The de-mystification of the FP lingo was very refreshing
         needs to be learned.
 
 Really the only thing that matters to Scala is that if an object
-implements map and flatMap then() it can be used in a for
+implements map and flatMap then it can be used in a for
 expression. That's it! Also, "For something to be used in a for
 expression, it doesn't have to be a class that implements map and
 flatMap methods; it just need to return a type that implements map and
@@ -53,24 +55,30 @@ flatMap methods"
 
 For that matter, did it help for Scala to call them "for expressions"?
 Does this just confuse imperative programmers in thinking they are
-looping when they are just calling generators and map functions?
+looping when they are just calling generators and map functions? Maybe
+a better name is "mapping expression" or "mapping comprehension".
 
 There was a lot of honesty that you don't hear from the FP camp. One
 example: "If an FP advocate says 'The IO monad makes a function that
-handles IO pure' they are lying." I really like the concept of an IO
-tag as a way to document impure functions. It's a shame that it
-doesn't work as the author exhaustively shows. Basically, having two
-levels of Monad such as Try[IO[String]] makes them difficult to unwrap
-in a for expression. Some frameworks work around this by making
-separate monads: FileIO, NetworkIO and DatabaseIO
+handles IO pure' they are lying." I wasted a lot of time trying to
+understand how IO could be handled in pure functions. If someone had
+told me this early in my functional learning it would have saved me a
+bunch of time.
+
+I really like the concept of an IO tag as a way to document impure
+functions. It's a shame that it doesn't work as the author
+exhaustively shows. Basically, having two levels of Monad such as
+Try[IO[String]] makes them difficult to unwrap in a for
+expression. Some frameworks work around this by making separate
+monads: FileIO, NetworkIO and DatabaseIO
 
 This brings me to the other standard monads. I love functional error
 handling with: Option, Try, Or, Either. These are genious.
 
-Domain modeling oop vs FP was interesting. It shows the power of FP
+Domain modeling OOP vs FP was interesting. It shows the power of FP
 for modeling very complex problems that have to be divided among
 multiple groups. I don't think he did a good job of selling the pure
-functional architecture. I think he believe this is the best
+functional architecture. I think he believes this is the best
 architecture but it didn't do it for me. Maybe I don't work on any
 projects that are large enough to benefit from that kind of
 separation?
@@ -79,7 +87,7 @@ The functional objects approach was an easy sell to me. I love the
 builder pattern:
 
 #+BEGIN_SRC scala
-Pizza p = Pizza().addTopping(Pepperoni()).addTopping(Mushroom())
+val p = Pizza().addTopping(Pepperoni()).addTopping(Mushroom())
 #+END_SRC
 
 The fact that the scala collection classes follow this pattern makes
@@ -90,7 +98,7 @@ immutable objects. I don't remember this from the Odersky classes.
 
 Futures are simple and awesome. They're a great way to replace any
 system that uses callbacks. They really leverage the scala "call by
-name" feature.
+name" language feature.
 
 ** The Indifferent
 
