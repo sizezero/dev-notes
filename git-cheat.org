@@ -1,4 +1,23 @@
 
+
+Terms
+
+| Term       | Notes                                                                  |
+|------------+------------------------------------------------------------------------|
+| repository | a collection of commits, branches and tags to identify commits         |
+| commit     | the smallest unit of a repository; a set of changes to all files       |
+| branch     | a series of commits representing a line of development                 |
+| master     | the main branch (trunk in other systems)                               |
+| a head     | the top commit of a branch                                             |
+| HEAD       | the currently checked out location within a branch                     |
+| tag        | symbolic name for a commit                                             |
+| remote     | one of possibly many other repositories forked from/by this repository |
+| origin     | a commonly used alias for the most important remote                    |
+| clone      | copying a repository; src repo is named origin                         |
+| fetch      | gets commits from a remote repository                                  |
+| merge      | combines remote commits with local commits and updates head            |
+| pull       | fetch followed by merge                                                |
+
 #+BEGIN_SRC bash
 git commit -a -m "commit all modified files"
 #+END_SRC
