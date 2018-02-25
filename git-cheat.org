@@ -35,7 +35,7 @@ mkdir ~/Hello-World
 cd ~/Hello-World
 git init
 git remote add origin https://github.com/username/Hello-World.git
-git push origin master
+git push -u origin master
 #+END_SRC
 
 new repository from local directory
