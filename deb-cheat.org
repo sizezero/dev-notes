@@ -1,0 +1,129 @@
+
+* deb Cheat
+
+** Tools
+
+*** dpkg
+
+dpkg operates on individual packages. It does not handle dependencies.
+
+*** apt-get
+
+apt-get is a low level package management system that installs and
+removes packages along with dependencies. It is a stable, low level
+tool that has a dependeble ui.
+
+*** apt-cache
+
+Performs various operations on the package cache.
+
+*** apt
+
+apt is a more user friendly tool. It's ui may change and improve.
+
+** Common Actions
+
+*** List all available packages
+
+Package name and one line description
+
+#+BEGIN_SRC bash
+apt-cache search .
+#+END_SRC
+
+Not a pleasing format
+
+#+BEGIN_SRC bash
+apt list --all-versions
+#+END_SRC
+
+*** List installed packages
+
+#+BEGIN_SRC bash
+dpkg --get-selections | grep -v deinstall
+#+END_SRC
+
+Shows a one line description as well
+
+#+BEGIN_SRC bash
+dpkg -l
+#+END_SRC
+
+#+BEGIN_SRC bash
+apt list --installed
+#+END_SRC
+
+*** Install a package
+
+#+BEGIN_SRC bash
+apt-get install <package-name> [<package-name> ...]
+#+END_SRC
+
+#+BEGIN_SRC bash
+apt install <package-name> [<package-name> ...]
+#+END_SRC
+
+*** Remove a package
+
+#+BEGIN_SRC bash
+apt-get remove <package-name>
+#+END_SRC
+
+#+BEGIN_SRC bash
+apt remove <package-name>
+#+END_SRC
+
+Purge removes all configuration files as well
+
+#+BEGIN_SRC bash
+apt-get purge <package-name>
+#+END_SRC
+
+#+BEGIN_SRC bash
+apt purge <package-name>
+#+END_SRC
+
+Autoremove removes packages that were auto installed an no longer
+needed.
+
+#+BEGIN_SRC bash
+apt-get autoremove <package-name>
+#+END_SRC
+
+#+BEGIN_SRC bash
+apt autoremove <package-name>
+#+END_SRC
+
+*** Display information about a package
+
+Information is not that useful but it has a multi-line description.
+
+#+BEGIN_SRC bash
+dpkg show <package-name>
+#+END_SRC
+
+#+BEGIN_SRC bash
+apt show <package-name>
+#+END_SRC
+
+*** Display files for installed package
+
+#+BEGIN_SRC bash
+dpkg -L <package-name>
+#+END_SRC
+
+*** Update installed packages
+
+First update the cached list of available packages and then upgrade
+installed packages. You should normally run these consecutively.
+
+#+BEGIN_SRC bash
+apt-get update <package-name>
+apt-get upgrade <package-name>
+#+END_SRC
+
+#+BEGIN_SRC bash
+apt update <package-name>
+apt upgrade <package-name>
+#+END_SRC
+
