@@ -34,6 +34,7 @@ create it on github
 mkdir ~/Hello-World
 cd ~/Hello-World
 git init
+<add at least one commit>
 git remote add origin https://github.com/username/Hello-World.git
 git push -u origin master
 #+END_SRC
