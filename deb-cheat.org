@@ -63,6 +63,12 @@ apt-get install <package-name> [<package-name> ...]
 apt install <package-name> [<package-name> ...]
 #+END_SRC
 
+Install from a deb file.
+
+#+BEGIN_SRC bash
+sudo apt install ./<deb-filename>
+#+END_SRC
+
 *** Remove a package
 
 #+BEGIN_SRC bash
@@ -104,6 +110,12 @@ dpkg show <package-name>
 
 #+BEGIN_SRC bash
 apt show <package-name>
+#+END_SRC
+
+Display information about a .deb file.
+
+#+BEGIN_SRC bash
+dpkg-deb -I <deb-filename>
 #+END_SRC
 
 *** Display files for installed package
