@@ -54,7 +54,7 @@ so the second command is slightly different.
 
 #+BEGIN_SRC bash
 git clone --bare https://github.com/sizezero/dotfiles.git ~/.cfg
-alias config='/data/data/com.termux/files/user/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias config='/data/data/com.termux/files/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 config checkout
 #if the above command fails, delete or backup any conflicting files and retry
 config config --local status.showUntrackedFiles no
