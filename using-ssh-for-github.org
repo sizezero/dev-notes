@@ -1,6 +1,6 @@
 How-to enable public/private keys for github.
 
-* Create a Private Key and adding it to your agent
+* Create a private key and add it to your agent
 
 [[https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent][Create a private key and add it to your agent.]]
 
