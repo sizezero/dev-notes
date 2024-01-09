@@ -1,4 +1,49 @@
 
+* 2027-01
+
+Now that I'm retired, I'm getting into Scala a bit. The new way to
+install scala is to run a curl script that downloads and runs
+something called coursier which ends up installing a bunch of scala
+development programs into `.local/share/coursier/bin` the most
+important are probably sbt, amm, and scala-cli.
+
+I've also downloaded VSCode and metals which is supposed to give me a
+decent scala development experience.
+
+The command to create a new scala3 project is:
+
+#+BEGIN_SRC bash
+sbt new scala/scala3.g8
+<enter the github passphrase>
+<enter the name of the project; a new directory in the current dir 
+ will be made with that name>
+sbt run
+#+END_SRC
+
+A lot of people hate SBT but it is so standard it is easy to find
+documentation on it. I only expect to have dirt simple builds so it
+should be fine. I might switch to mill when that becomes more
+standard.
+
+If you open the new project directory in a metal enabled VSCode it
+appears to build, run, debug, and navigation the program
+correctly. Opening a file named `hello.worksheet.sc` gives you a scala
+worksheet than can dynamically evaluate scala commands.
+
+In the SBT file it's useful to get rid of the munit library and
+replace it with the Scala Toolkit. This gives you munit, os-lib,
+uPickle (JSON), and sttp (an HTTP library)
+
+#+BEGIN_SRC scala
+    //libraryDependencies += "org.scalameta" %% "munit" % "0.7.29" % Test
+    libraryDependencies += "org.scala-lang" %% "toolkit" % "0.1.7",
+    libraryDependencies += "org.scala-lang" %% "toolkit-test" % "0.1.7" % Test
+#+END_SRC
+
+I think my first project will be to write a near drop-in replacement
+for my stock quote program. I'll make a project and start drafting
+requirements.
+
 * 2017-11
 
 I haven't had a need for Scala in a couple years.
@@ -6,8 +51,6 @@ I haven't had a need for Scala in a couple years.
 My friend Tony sent me a free ebook "Functional, Programming
 Simplified: (Scala Edition)." It had enough good points that it's
 worth a little note taking.
-
-** The Good
 
 The author of the book grew up with clasical imperative / OOP
 methodologies and has since been using Scala to learn and implement
