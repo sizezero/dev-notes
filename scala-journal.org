@@ -54,9 +54,9 @@ The command to create a new scala3 command line project is:
 
 #+BEGIN_SRC bash
 sbt new scala/scala3.g8
-<enter the github passphrase>
-<enter the name of the project; a new directory in the current dir 
- will be made with that name>
+#enter the github passphrase
+#enter the name of the project; a new directory in the current dir 
+# will be made with that name
 sbt run
 #+END_SRC
 
