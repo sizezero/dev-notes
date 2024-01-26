@@ -44,13 +44,13 @@ java -jar ~/stock-notes-sc/target/scala-3.3.1/stock-notes-sc-assembly-0.1.0-SNAP
 Now that I'm retired, I'm getting into Scala a bit. The new way to
 install scala is to run a curl script that downloads and runs
 something called coursier which ends up installing a bunch of scala
-development programs into `.local/share/coursier/bin` the most
+development programs into =.local/share/coursier/bin= the most
 important are probably sbt, amm, and scala-cli.
 
 I've also downloaded VSCode and metals which is supposed to give me a
 decent scala development experience.
 
-The command to create a new scala3 project is:
+The command to create a new scala3 command line project is:
 
 #+BEGIN_SRC bash
 sbt new scala/scala3.g8
@@ -67,7 +67,7 @@ standard.
 
 If you open the new project directory in a metal enabled VSCode it
 appears to build, run, debug, and navigation the program
-correctly. Opening a file named `hello.worksheet.sc` gives you a scala
+correctly. Opening a file named =hello.worksheet.sc= gives you a scala
 worksheet than can dynamically evaluate scala commands.
 
 In the SBT file it's useful to get rid of the munit library and
