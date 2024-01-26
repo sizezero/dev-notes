@@ -2,14 +2,14 @@
 * 2024-01-25
 
 I had trouble figuring out how to run my cli program without sbt. The
-jar file was generated in `<project>/target/scala-3.3.1/*.jar` but
-when I try to run it with either `java -jar` or `scala` I get a bunch
+jar file was generated in =<project>/target/scala-3.3.1/*.jar= but
+when I try to run it with either =java -jar= or =scala= I get a bunch
 of class not found errors probably due to a missing classpath.
 
 One of the solutions is to make a fat jar that can then be run with
 java.
 
-Create a new file called `project/plugins.sbt` and add the following
+Create a new file called =project/plugins.sbt= and add the following
 line to it.
 
 #+BEGIN_SRC scala
