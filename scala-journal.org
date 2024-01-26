@@ -45,7 +45,7 @@ Now that I'm retired, I'm getting into Scala a bit. The new way to
 install scala is to run a curl script that downloads and runs
 something called coursier which ends up installing a bunch of scala
 development programs into =.local/share/coursier/bin= the most
-important are probably sbt, amm, and scala-cli.
+important are probably =sbt=, =amm=, and =scala-cli=.
 
 I've also downloaded VSCode and metals which is supposed to give me a
 decent scala development experience.
