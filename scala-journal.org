@@ -1,4 +1,62 @@
 
+* 2024-01-31
+
+I thought deploying the scala fat jar on dreamhost would be easy but I
+ran into errors loading libraries. I checked and it turns out that
+dreamhost has java8 installed by default. I uploaded a newer jdk and
+ran into the following error.
+
+#+BEGIN_SRC bash
+$ jdk-11.0.22+7/bin/java
+Error occurred during initialization of VM
+Failed to mark memory page as executable - check if grsecurity/PaX is enab
+#+END_SRC
+
+Dreamhost runs a secure version of linux that refuses to run user
+uploaded binaries. This is probably a good security decision but makes
+the service much less useful.
+
+My next tact is to try to get my application to run under java8. It
+seems even the latest version of scala 3 should have no problem
+running on java8 and sbt even has options to restrict the target and
+the jdk. I decided to go with the easy route of just setting JAVA_HOME
+and running sbt. Once I did this I still got some library errors.
+
+The first set of errors involved calls to String.strim() which was
+fixed by changing the calls to String.trim(). The next errors were
+related to sttp and, after some research, it seems that sttp requires
+java 11. I briefly looked at other scala libraries but was worried
+that it would be equally hard to track dependencies until after I was
+already using them and could see whether or not they actually
+worked. So instead I decided to implement the http get with java8 libs
+which was long, ugly and painful to get working. Once this was done
+everything worked.
+
+After the libraries were fixed I ran the jar build with the new java
+with no problem on java8. It turns out that it didn't care about that.
+
+I'm not sure what the take home message of this is. I am both floored
+that the newest scala can support java8 in some limited fashion. I'm a
+bit more concerned that my hosting company only supports an ancient
+version of java and doesn't support any custom tools. All in all, this
+is a big plus for scala. If I had a version of my app in a newer
+version of any other language, I probably would not be able to run it
+on dreamhost.
+
+* 2024-01-30
+
+I tried to add a dependency for scalatags and ran into a bunch of
+problems. It seems much of the "getting started" documentation is
+outdated and you need to go to mavencentral and look for the scala 3
+version of the library. After doing that, I've got an updated list of
+dependencies:
+
+#+BEGIN_SRC scala
+    libraryDependencies += "org.scala-lang" %% "toolkit" % "0.2.1",
+    libraryDependencies += "org.scala-lang" %% "toolkit-test" % "0.2.1" % Test,
+    libraryDependencies += "com.lihaoyi" %% "scalatags" % "0.12.0"
+#+END_SRC
+
 * 2024-01-25
 
 I had trouble figuring out how to run my cli program without sbt. The
