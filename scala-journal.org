@@ -19,11 +19,12 @@ the service much less useful.
 My next tact is to try to get my application to run under java8. It
 seems even the latest version of scala 3 should have no problem
 running on java8 and sbt even has options to restrict the target and
-the jdk. I decided to go with the easy route of just setting JAVA_HOME
-and running sbt. Once I did this I still got some library errors.
+the jdk. I decided to go with the easy route of just setting
+=JAVA_HOME= and running =sbt=. Once I did this I still got some
+library errors.
 
-The first set of errors involved calls to String.strim() which was
-fixed by changing the calls to String.trim(). The next errors were
+The first set of errors involved calls to =String.strip()= which was
+fixed by changing the calls to =String.trim()=. The next errors were
 related to sttp and, after some research, it seems that sttp requires
 java 11. I briefly looked at other scala libraries but was worried
 that it would be equally hard to track dependencies until after I was
