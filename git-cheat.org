@@ -47,6 +47,7 @@ git init
 checkout existing repository
 #+BEGIN_SRC bash
 git clone https://github.com/username/Hello-World.git mynewdir
+cd mynewdir
 git status
 #+END_SRC
 
