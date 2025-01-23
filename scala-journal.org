@@ -301,6 +301,13 @@ such a richer language.
 None of the authors arguments on partially applied functions and
 currying sold me on their value.
 
+2025 revisit: After working on stock-notes-sc I found a case where the
+I wanted a function that can be paramaterized with configuration that
+has nothing to do with the general use of it's functionality. Currying
+did this cleanly without having to use something complex like class
+inheritence. See the method downloadSingleQuoteFromFinnhub in
+https://github.com/sizezero/stock-notes-sc/blob/master/src/main/scala/org/kleemann/stocknotes/command/DownloadQuotes.scala
+
 He only had a couple chapters on Akka and actors so maybe I shouldn't
 ding him on this but I still haven't seen a good actor example that
 makes me say "this is a great way to solve this problem". How do
