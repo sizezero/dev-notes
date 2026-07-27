@@ -33,6 +33,33 @@ function. I can't imagine a way that this would be clean code.
 The alternative is to just call toList() on the generator, read in the
 whole file, and suffer the memory footprint.
 
+I think I now understand why the Generator model is invevitable for
+lazily reading lines from a file.
+
+I considered writing a wrapper object around os.read.lines():
+
+#+BEGIN_SRC
+class Lines {
+  def apply(fileToOpen: os.Path)
+  def head: String
+  def tail: Lines
+  def isEmpty: Boolean
+}
+#+END_SRC
+
+The problem is that, since by definition, we are reading from the file
+as we consume the data, this structure is going to need to contain an
+open file handle pointer. The next line of the file has to be read and
+cached either when head() is called or when tail() is called. From
+whichever place it is called permanently changes all future reads from
+that file handle thus making the Lines object mutable. E.g. if you
+pass this object to two different functions then their calls will
+affect the other functions Lines object.
+
+If you change the signature to have functions like headOnce() or
+tailsOnce() then you're really pretending that this mutable object is
+immutable and relying on users of the object not to mess things up.
+
 * 2024-01-31
 
 I thought deploying the scala fat jar on dreamhost would be easy but I
