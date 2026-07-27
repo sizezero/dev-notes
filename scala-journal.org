@@ -1,4 +1,38 @@
 
+* 2026-07-27
+
+While working on story-cli I noticed that I had a pattern where I was
+reading files with os.read.lines() and then immediately calling
+toList() before passing it to consuming functions.
+
+Most of the files are small, but the story files could be a bit
+bigger, not more than a megabyte, but it just seemed "bad" to
+needlessly read all that data into memory at once when it's not
+necessary.
+
+The way around this is to call os.read.lines().stream which returns an
+os.Generator[String] object. I thought this would be a drop-in
+replacement for List[String] but that's not the case.
+
+os.Generator is not pull based so it doesn't offer a way to read the
+next element (head) and then pass the remainder to another function
+(tail). The alternative is that it provides all kinds of familiar
+second order functions such as filter, map, flatmap, foreach, etc. The
+idea is that you build the way you express this transformation and
+then run it all at once. This push model allows the Generator to
+guarantee that it will be fully iteratred over which will guarantee an
+opportunity to atomically open the file and close it.
+
+I haven't figured out a way to map this model onto the tail recurive
+function that splits the input into head and tail and parses the file.
+I think the way around this is to have a builder object that you pass
+through a foldLeft(). I think this would be ugly because the builder
+object needs to somehow own the state which contains the parse
+function. I can't imagine a way that this would be clean code.
+
+The alternative is to just call toList() on the generator, read in the
+whole file, and suffer the memory footprint.
+
 * 2024-01-31
 
 I thought deploying the scala fat jar on dreamhost would be easy but I
