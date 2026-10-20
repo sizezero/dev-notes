@@ -72,3 +72,14 @@
     * this doesn't seem to do what I think it does
   * "l" maximizes the log view
   * "q" backs out of menus and eventually quits
+
+# Debian / Chromebook
+
+* list, add, and remove, wifi networks with nmcli
+  * nmcli con show
+  * shows all network configurations
+  * nmcli wifi list
+  * show all available wifi networks
+  * nmcli dev wifi connect SSID password PASSWORD
+  * nmcli con down CONFIGURATION
+  * nmcli con up CONFIGURATION
