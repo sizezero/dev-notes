@@ -1,4 +1,82 @@
 
+* 2026-10-20
+
+I got around the previous problem of parsing a large file by changing
+the parsing to using a builder object. This was slightly less than
+elegant because it changed nice model of heierarchical parsing to
+calling sub functions to handling all state within the builder object.
+
+In order to make this work efficiently I had to:
+1) open the file (from multiple sources
+2) read and parse each line and add to the builder object
+3) use the builder to create the final story object
+
+Each of these steps returns a Either[String, Foo] value. If the Left
+error is returned then none of the subsequent steps need to be run. I
+struggled to find a functional way to both short circuit out of this
+while calling each builder.add(line).
+
+The solution was to write a modified foldLeft that has an Iterable[A]
+as the accumulator and an Either[E, B] as the op return value. E is
+the Error type which is String in this case. The loop short circuits
+out if op produces a Left.
+
+#+BEGIN_SRC
+    // This is a foldLeft but breaks out when the returned Either value is the Left argument
+    // the signature is foldLeft with the returned B replaced with Either[E, B] where E is the 
+    // error type often a String.
+    private def foldLeftWhileRight[A, B, E](it: Iterator[A], z: B)(op: (B, A) => Either[E, B]): Either[E, B] = {
+        // since we are consuming from a mutable iterator
+        // I'm not sure if it even makes sense to do this functionally
+        var acc: Either[E, B] = Right(z)
+        var keepRunning = true
+        while (keepRunning && it.hasNext)
+            keepRunning = acc match
+                case Left(_)  => false
+                case Right(b) => {
+                    acc = op(b, it.next())
+                    true
+                }
+        acc
+    }
+#+END_SRC
+
+I implemented the code that maintined both the legacy List
+implementation and the new Iterator/Builder implementation and have
+now decided to remove the List implementation. Here are the notes from
+the List implementation:
+
+This package contains the original version of the code that parsed
+various files. The input is a List[String] which represents the fully
+loaded lines of the file. The parsing was performed with tail recurive
+functions that used the typical head/tail mechanism. I found that I
+could handle heierarchical state by passing control to a different
+function and then returning to the parent function. The child function
+only needed a subset of the state that was relavant to it.
+
+When I realized that one of the files to read is my story draft, I
+felt uncomfortable with a parser implementation that required the
+entire contents of the file to be read into memory. Even the the
+functions only cared about a line at a time, being passed a ref that
+can be broken into head and tail means there are few compile time
+options that verify that the function is only reading one line at a
+time.
+
+I was intrigued by using Streams. This is a model that lazily reads
+from a file and keeps a list of the contents of the file but will
+garbage collect it if there are no reference to it. Best practice says
+to read this with a tail recursive function so that previous heads go
+out of scope and can be garbage collected. The problem is that this
+constraint can't be checked at compile time. The only way to be
+certain that this is happening is to perform a run-time memory
+profile. Even then, there's always a chance that the program run ends
+before there is any garbage collection.
+
+Stream was eventually deprecated for lazy lists. Most people say that
+the safest way to read a file is via iterators. The negative of
+iterators is that you can't use the head/tail functional paradigm but
+instead have to shove a builder object through foldRight.
+
 * 2026-07-27
 
 While working on story-cli I noticed that I had a pattern where I was
