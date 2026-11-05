@@ -17,6 +17,11 @@
   * git tag -a draft-1 -m "first draft"
   * git tag
   * git push origin draft-1
+* emacs (general)
+  * M-c capitalize the following word
+    * the point must be at the beginning of the word or on the space
+      before the word. Use preve and next word to align.
+  * M-l convert the following word to lower case
 * emacs jinx
   * M-x jinx-correct-all
     * I haven't found another way to start jinx mode
@@ -31,6 +36,9 @@
     * '+' adds it to the session
       * I'm not even sure what this is
     * M-n M-p next and previous misspelled word
+* w3m
+  * B back up to previous page
+  * s popup buffer selection
 * sm-im
   * The 26.04 ubuntu apt version doesn't work correctly; try to just use it on hector
   * ":q" to quit
