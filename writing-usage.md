@@ -7,6 +7,7 @@
   * story-cli clone <story>
   * cd ~/stories/checkouts/<story>
   * make
+  * make view
 * setting up the environment
   * all in the story directory
   * tty 0: emacs
@@ -14,6 +15,7 @@
   * tty 2: "w3m duckduckgo.com"  "w3m wikipedia.com" searching
 * tagging
   * Reach some milestone
+  * commit all changes
   * git tag -a draft-1 -m "first draft"
   * git tag
   * git push origin draft-1
@@ -24,23 +26,28 @@
   * M-l convert the following word to lower case
 * emacs jinx
   * M-x jinx-correct-all
-    * I haven't found another way to start jinx mode
   * M-$ triggers correction for the word under point (jinx-correct)
     * "?" to bring up the window showing corrections and shortcuts
     * One or two digits selects an existing dictionary correcting option
     * @ adds to global, personal dictionary
-      * This might be the best option for most words. Names and world building concepts will likely be in all documents
-    * / adds it to the directory; most corrections probably go here
+      * Add very few words here. Things like my last name.
+    * / adds it to the directory
+      * most corrections go here
     * '*' adds it to the current file (in a comment at the end of the doc)
       * few corrections go here
     * '+' adds it to the session
       * I'm not even sure what this is
     * M-n M-p next and previous misspelled word
+* markdown
+  * '#' for chapter's
+  * three hyphens for section breaks
+  * use the html entity &emdash; to display an em dash
 * w3m
   * B back up to previous page
   * s popup buffer selection
 * sm-im
-  * The 26.04 ubuntu apt version doesn't work correctly; try to just use it on hector
+  * the packaged version doesn't work; you need to compile from the
+    latest github source
   * ":q" to quit
   * ":h" help
   * arrows to move around
