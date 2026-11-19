@@ -6,6 +6,7 @@
   * optional: story-cli new <story>
   * story-cli clone <story>
   * cd ~/stories/checkouts/<story>
+    * or: story-cli cd <story-fragment>
   * make
   * make view
 * setting up the environment
@@ -22,8 +23,10 @@
 * emacs (general)
   * M-c capitalize the following word
     * the point must be at the beginning of the word or on the space
-      before the word. Use preve and next word to align.
+      before the word. Use prev and next word to align.
   * M-l convert the following word to lower case
+  * C-x 2 split window horizontally
+    * C-x 0 back to one window
 * emacs jinx
   * M-x jinx-correct-all
   * M-$ triggers correction for the word under point (jinx-correct)
